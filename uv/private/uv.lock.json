@@ -1,0 +1,30 @@
+{
+  "uv": {
+    "binaries": [
+      {
+        "kind": "archive",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.1.17/uv-x86_64-unknown-linux-gnu.tar.gz",
+        "sha256": "add91a881b3de0a2defa6cf363bbbbfb5dc58e85cff52e8164052e86fee73809",
+        "file": "uv-x86_64-unknown-linux-gnu/uv",
+        "os": "linux",
+        "cpu": "x86_64"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.1.17/uv-x86_64-apple-darwin.tar.gz",
+        "sha256": "957fbe84e1fb1a7e8b43ed4db7bd5ef5ea3b3f996c92144d5eaf6b3e259859cd",
+        "file": "uv-x86_64-apple-darwin/uv",
+        "os": "macos",
+        "cpu": "x86_64"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.1.17/uv-aarch64-apple-darwin.tar.gz",
+        "sha256": "8f6d1b142dfc4d2040b86a94956eb3c2f5436fd0e889e0d0d1c59dbb8fbbf9de",
+        "file": "uv-aarch64-apple-darwin/uv",
+        "os": "macos",
+        "cpu": "arm64"
+      }
+    ]
+  }
+}

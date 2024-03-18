@@ -1,0 +1,28 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  test:
+    uses: bazel-contrib/.github/.github/workflows/bazel.yaml@v5
+    with:
+      folders: |
+        [
+          ".",
+          "examples/typical",
+        ]
+      # we only support Bazel 7, and only with bzlmod enabled
+      exclude: |
+        [
+          {"bzlmodEnabled": false},
+          {"bazelversion": "5.4.0"},
+          {"bazelversion": "6.4.0"},
+        ]
+      # this ruleset only supports linux and macos
+      exclude_windows: true

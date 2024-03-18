@@ -1,0 +1,19 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
+exports_files([
+    "create_venv.sh",
+    "pip_compile_test.sh",
+    "pip_compile.sh",
+])
+
+bzl_library(
+    name = "pip",
+    srcs = ["pip.bzl"],
+    visibility = ["//multitool:__subpackages__"],
+)
+
+bzl_library(
+    name = "venv",
+    srcs = ["venv.bzl"],
+    visibility = ["//multitool:__subpackages__"],
+)
