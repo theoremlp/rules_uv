@@ -25,11 +25,9 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
       - name: Download and Extract Latest Multitool
         run: |
-          curl -o multitool.tar.xz \
-              "$(curl https://api.github.com/repos/theoremlp/multitool/releases/latest \
-               | jq -r '.assets[].browser_download_url | select(. | test("linux-gnu.tar.xz$"))')"
-
-          tar --strip-components -xzf multitool.tar.xz
+          latest="$(curl https://api.github.com/repos/theoremlp/multitool/releases/latest | jq -r '.assets[].browser_download_url | select(. | test("linux-gnu.tar.xz$"))')"
+          wget -O multitool.tar.xz "$latest"
+          tar --strip-components=1 -xzf multitool.tar.xz
       - name: Find Updates and Render Lockfile
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
