@@ -1,0 +1,36 @@
+name: autosquash
+on:
+  pull_request:
+    types:
+      # omit "opened" as labeling happens after opening
+      # and when we include both the two events end up
+      # canceling each other's runs.
+      - reopened
+      - edited
+      - labeled
+      - synchronize
+      - unlabeled
+      - ready_for_review
+concurrency:
+  # only one autosquash at a time per PR
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  autosquash:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.THM_AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.THM_AUTOMATION_PRIVATE_KEY }}
+      - uses: actions/checkout@v4
+      - uses: theoremlp/autosquash@v1
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          pull-request-number: ${{ github.event.pull_request.number }}
+          squash-commit-title: "${{ github.event.pull_request.title }} (#${{ github.event.pull_request.number }})"
+          squash-commit-message: "${{ github.event.pull_request.body }}"
+          do-not-merge-label: "do not merge"
+          required-label: "automerge"
