@@ -1,0 +1,54 @@
+name: Periodic - Update Multitool Versions
+on:
+  workflow_dispatch: {}
+  schedule:
+    # run every hour on the 5 between 9am and 5pm (4am and 12pm UTC), M-F
+    - cron: "5 14-22 * * 1-5"
+jobs:
+  update-requirement:
+    name: Update Multitool Versions
+    runs-on: thm-eks-prod-spot
+    permissions:
+      id-token: write
+      contents: read
+    # disable running on anything but main
+    if: ${{ github.ref == 'refs/heads/main' }}
+    steps:
+      - name: Get Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.THM_AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.THM_AUTOMATION_PRIVATE_KEY }}
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+      - name: Download and Extract Latest Multitool
+        run: |
+          curl -o multitool.tar.xz \
+              "$(curl https://api.github.com/repos/theoremlp/multitool/releases/latest \
+               | jq -r '.assets[].browser_download_url | select(. | test("linux-gnu.tar.xz$"))')"
+
+          tar --strip-components -xzf multitool.tar.xz
+      - name: Find Updates and Render Lockfile
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: ./multitool --lockfile uv/private/uv.lock.json update
+      - name: Commit Changes
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          BRANCH_NAME: "automation/update-multitool-lockfile"
+        run: |
+          if [[ -n "$(git diff multitool.lock.json)" ]]
+          then
+            git config --local user.name 'Theorem Automation'
+            git config --local user.email 'thm-automation[bot]@users.noreply.github.com'
+            git checkout -b "${BRANCH_NAME}"
+            git add multitool.lock.json
+            git commit -m "Update Multitool Versions
+            
+            Updated with [update-multitool](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}) by *${GITHUB_ACTOR}*
+            "
+            git push origin "${BRANCH_NAME}" -f
+            gh pr create --fill --label "automerge" >> "$GITHUB_STEP_SUMMARY"
+          fi
