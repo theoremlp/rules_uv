@@ -11,6 +11,8 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    env:
+      LOCKFILE: uv/private/uv.lock.json
     # disable running on anything but main
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
@@ -31,18 +33,18 @@ jobs:
       - name: Find Updates and Render Lockfile
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: ./multitool --lockfile uv/private/uv.lock.json update
+        run: ./multitool --lockfile "$LOCKFILE" update
       - name: Commit Changes
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           BRANCH_NAME: "automation/update-multitool-lockfile"
         run: |
-          if [[ -n "$(git diff multitool.lock.json)" ]]
+          if [[ -n "$(git diff "$LOCKFILE")" ]]
           then
             git config --local user.name 'Theorem Automation'
             git config --local user.email 'thm-automation[bot]@users.noreply.github.com'
             git checkout -b "${BRANCH_NAME}"
-            git add multitool.lock.json
+            git add "$LOCKFILE"
             git commit -m "Update Multitool Versions
             
             Updated with [update-multitool](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}) by *${GITHUB_ACTOR}*
