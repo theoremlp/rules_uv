@@ -7,7 +7,7 @@ on:
 jobs:
   update-requirement:
     name: Update Multitool Versions
-    runs-on: thm-eks-prod-spot
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
