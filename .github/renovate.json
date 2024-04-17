@@ -1,18 +1,16 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": [
-      ":dependencyDashboard",
-      ":semanticPrefixFixDepsChoreOthers",
-      "group:monorepos",
-      "group:recommended",
-      "replacements:all",
-      "workarounds:all"
-    ],
-    "packageRules": [
-      {
-        "matchFiles": ["MODULE.bazel"],
-        "enabled": false
-      }
-    ]
-  }
-  
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [":semanticCommitsDisabled"],
+  "enabledManagers": ["github-actions"],
+  "timezone": "America/New_York",
+  "schedule": ["every weekday after 9am before 5pm"],
+  "branchConcurrentLimit": 10,
+  "labels": ["automerge"],
+  "dependencyDashboard": true,
+  "packageRules": [
+    {
+      "matchFiles": ["MODULE.bazel"],
+      "enabled": false
+    }
+  ]
+}

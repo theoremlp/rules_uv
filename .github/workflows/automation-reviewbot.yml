@@ -1,0 +1,14 @@
+name: reviewbot
+on:
+  pull_request: {}
+  pull_request_review: {}
+jobs:
+  required-reviewers:
+    name: reviewbot
+    runs-on: ubuntu-latest
+    steps:
+      - name: required-reviewers
+        uses: theoremlp/required-reviews@v2
+        with:
+          github-token: ${{ secrets.REVIEW_TOKEN_PUB }}
+          post-review: true
