@@ -7,6 +7,7 @@ on:
 jobs:
   renovate:
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Get Renovate GitHub App Token
         id: app-token

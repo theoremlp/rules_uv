@@ -1,0 +1,24 @@
+name: autorelease
+on:
+  workflow_dispatch: {}
+  schedule:
+    # check at 11am every day
+    - cron: "0 11 * * *"
+jobs:
+  autorelease:
+    name: autorelease
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+    steps:
+      - name: Get Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.THM_AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.THM_AUTOMATION_PRIVATE_KEY }}
+      - name: autorelease
+        uses: markelliot/autorelease@v2
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          max-days: 7
+          tag-only: true
