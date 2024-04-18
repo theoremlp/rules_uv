@@ -1,5 +1,6 @@
 name: autorelease
 on:
+  workflow_dispatch: {}
   schedule:
     # check at 11am every day
     - cron: "0 11 * * *"
@@ -7,6 +8,7 @@ jobs:
   autorelease:
     name: autorelease
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Get Token
         id: app-token
