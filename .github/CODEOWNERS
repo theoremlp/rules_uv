@@ -1,0 +1,4 @@
+* @theoremlp/eng
+
+.github/workflows/*.yml @theoremlp/eng @reviewbot-theorem
+uv/private/uv.lock.json @theoremlp/eng @reviewbot-theorem
