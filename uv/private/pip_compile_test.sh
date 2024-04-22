@@ -3,6 +3,7 @@
 set -euo pipefail
 
 UV="{{uv}}"
+PYTHON_PLATFORM="{{python_platform}}"
 RESOLVED_PYTHON="{{resolved_python}}"
 REQUIREMENTS_IN="{{requirements_in}}"
 REQUIREMENTS_TXT="{{requirements_txt}}"
@@ -21,5 +22,6 @@ $UV pip compile \
     --no-header \
     --no-strip-extras \
     --python-version=$PYTHON_VERSION \
+    $(echo $PYTHON_PLATFORM) \
     -c $REQUIREMENTS_TXT \
     $REQUIREMENTS_IN
