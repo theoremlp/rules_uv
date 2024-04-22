@@ -18,6 +18,7 @@ PYTHON_VERSION="$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.
 $UV pip compile \
     --generate-hashes \
     --no-header \
+    --no-strip-extras \
     --python-version=$PYTHON_VERSION \
     -o $REQUIREMENTS_TXT \
     $REQUIREMENTS_IN \

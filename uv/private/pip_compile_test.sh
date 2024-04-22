@@ -19,6 +19,7 @@ $UV pip compile \
     --no-cache \
     --generate-hashes \
     --no-header \
+    --no-strip-extras \
     --python-version=$PYTHON_VERSION \
     -c $REQUIREMENTS_TXT \
     $REQUIREMENTS_IN
