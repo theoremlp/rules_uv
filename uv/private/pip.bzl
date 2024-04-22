@@ -5,8 +5,14 @@ _PY_TOOLCHAIN = "@bazel_tools//tools/python:toolchain_type"
 _common_attrs = {
     "requirements_in": attr.label(mandatory = True, allow_single_file = True),
     "requirements_txt": attr.label(mandatory = True, allow_single_file = True),
+    "python_platform": attr.string(default = ""),
     "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = "exec"),
 }
+
+def _python_platform(maybe_python_platform):
+    if maybe_python_platform == "":
+        return ""
+    return "--python-platform {python_platform}".format(python_platform = maybe_python_platform)
 
 def _uv_pip_compile(ctx, template, executable):
     py_toolchain = ctx.toolchains[_PY_TOOLCHAIN]
@@ -18,6 +24,7 @@ def _uv_pip_compile(ctx, template, executable):
             "{{requirements_in}}": ctx.file.requirements_in.short_path,
             "{{requirements_txt}}": ctx.file.requirements_txt.short_path,
             "{{resolved_python}}": py_toolchain.py3_runtime.interpreter.short_path,
+            "{{python_platform}}": _python_platform(ctx.attr.python_platform),
         },
     )
 
@@ -64,11 +71,12 @@ _pip_compile_test = rule(
     test = True,
 )
 
-def pip_compile(name, requirements_in = None, requirements_txt = None, target_compatible_with = None):
+def pip_compile(name, requirements_in = None, requirements_txt = None, target_compatible_with = None, python_platform = None):
     _pip_compile(
         name = name,
         requirements_in = requirements_in or "//:requirements.in",
         requirements_txt = requirements_txt or "//:requirements.txt",
+        python_platform = python_platform or "",
         target_compatible_with = target_compatible_with,
     )
 
@@ -76,6 +84,7 @@ def pip_compile(name, requirements_in = None, requirements_txt = None, target_co
         name = name + "_diff_test",
         requirements_in = requirements_in or "//:requirements.in",
         requirements_txt = requirements_txt or "//:requirements.txt",
+        python_platform = python_platform or "",
         target_compatible_with = target_compatible_with,
         tags = ["requires-network"],
     )
