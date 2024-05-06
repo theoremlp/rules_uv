@@ -45,7 +45,7 @@ Create a virtual environment with default path `venv` by running `bazel run //:c
 
 The created venv will use the default Python 3 runtime defined in rules_python.
 
-### Multi-platform setup
+## Multi-platform setup
 
 `uv` supports generating platform-specific requirements files, and `rules_uv` exposes this configuration, and a multi-platform setup might look like this:
 
