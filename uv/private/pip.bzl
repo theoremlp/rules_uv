@@ -71,7 +71,7 @@ _pip_compile_test = rule(
     test = True,
 )
 
-def pip_compile(name, requirements_in = None, requirements_txt = None, target_compatible_with = None, python_platform = None):
+def pip_compile(name, requirements_in = None, requirements_txt = None, target_compatible_with = None, python_platform = None, tags = None):
     _pip_compile(
         name = name,
         requirements_in = requirements_in or "//:requirements.in",
@@ -86,5 +86,5 @@ def pip_compile(name, requirements_in = None, requirements_txt = None, target_co
         requirements_txt = requirements_txt or "//:requirements.txt",
         python_platform = python_platform or "",
         target_compatible_with = target_compatible_with,
-        tags = ["requires-network"],
+        tags = ["requires-network"] + tags if tags else [],
     )
