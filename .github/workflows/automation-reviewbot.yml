@@ -6,9 +6,9 @@ jobs:
   required-reviewers:
     name: reviewbot
     runs-on: ubuntu-latest
-    if: ${{ github.repository_owner == 'theoremlp' }}
     steps:
       - name: required-reviewers
+        if: ${{ github.repository_owner == 'theoremlp' }}
         uses: theoremlp/required-reviews@v2
         with:
           github-token: ${{ secrets.REVIEW_TOKEN_PUB }}
