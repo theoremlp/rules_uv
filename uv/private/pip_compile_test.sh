@@ -26,7 +26,7 @@ $UV pip compile \
     --generate-hashes \
     --emit-index-url \
     --no-strip-extras \
-    --custom-compile-command "bazel run $LABEL" \
+    --custom-compile-command "bazel run ${LABEL%_diff_test}" \
     --python-version=$PYTHON_VERSION \
     $(echo $PYTHON_PLATFORM) \
     -o __updated__ \
