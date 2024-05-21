@@ -6,7 +6,7 @@ jobs:
   required-reviewers:
     name: reviewbot
     runs-on: ubuntu-latest
-    if: github.repository == 'theoremlp/rules_uv'
+    if: github.event.pull_request.head.repo.full_name == 'theoremlp/rules_uv'
     steps:
       - run: |
           echo "${{ toJSON(github) }}"
