@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'theoremlp/rules_uv'
     steps:
+      - run: |
+          echo "${{github.repository}}"
       - name: required-reviewers
         uses: theoremlp/required-reviews@v2
         with:
