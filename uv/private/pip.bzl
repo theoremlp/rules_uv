@@ -25,6 +25,7 @@ def _uv_pip_compile(ctx, template, executable):
             "{{requirements_txt}}": ctx.file.requirements_txt.short_path,
             "{{resolved_python}}": py_toolchain.py3_runtime.interpreter.short_path,
             "{{python_platform}}": _python_platform(ctx.attr.python_platform),
+            "{{label}}": str(ctx.label),
         },
     )
 

@@ -7,6 +7,7 @@ PYTHON_PLATFORM="{{python_platform}}"
 RESOLVED_PYTHON="{{resolved_python}}"
 REQUIREMENTS_IN="{{requirements_in}}"
 REQUIREMENTS_TXT="{{requirements_txt}}"
+LABEL="{{label}}"
 
 RESOLVED_PYTHON_BIN="$(dirname "$RESOLVED_PYTHON")"
 
@@ -24,8 +25,8 @@ $UV pip compile \
     --no-cache \
     --generate-hashes \
     --emit-index-url \
-    --no-header \
     --no-strip-extras \
+    --custom-compile-command "bazel run $LABEL" \
     --python-version=$PYTHON_VERSION \
     $(echo $PYTHON_PLATFORM) \
     -o __updated__ \
