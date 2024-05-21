@@ -9,7 +9,7 @@ jobs:
     if: github.repository == 'theoremlp/rules_uv'
     steps:
       - run: |
-          echo "${{github.repository}}"
+          echo "${{ toJSON(github) }}"
       - name: required-reviewers
         uses: theoremlp/required-reviews@v2
         with:
