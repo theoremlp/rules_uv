@@ -10,6 +10,12 @@ Installing with bzlmod, add to MODULE.bazel (adjust version as appropriate):
 bazel_dep(name = "rules_uv", version = "<version>")
 ```
 
+**Note**: rules_uv requires a Python toolchain to be available. One can be obtained by having [rules_python](https://github.com/bazelbuild/rules_python) installed using:
+
+```starlark
+bazel_dep(name = "rules_python", version = "<rules_python version>")
+```
+
 ### pip_compile
 
 Create a requirements.in or pyproject.toml -> requirements.txt compilation target and diff test:
