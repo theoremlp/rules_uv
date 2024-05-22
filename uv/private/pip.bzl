@@ -14,7 +14,7 @@ def _python_platform(maybe_python_platform):
         return ""
     return "--python-platform {python_platform}".format(python_platform = maybe_python_platform)
 
-def _uv_pip_compile(ctx, template, executable):
+def _uv_pip_compile(ctx, template, executable, generator_label):
     py_toolchain = ctx.toolchains[_PY_TOOLCHAIN]
     ctx.actions.expand_template(
         template = template,
@@ -25,7 +25,7 @@ def _uv_pip_compile(ctx, template, executable):
             "{{requirements_txt}}": ctx.file.requirements_txt.short_path,
             "{{resolved_python}}": py_toolchain.py3_runtime.interpreter.short_path,
             "{{python_platform}}": _python_platform(ctx.attr.python_platform),
-            "{{label}}": str(ctx.label),
+            "{{label}}": str(generator_label),
         },
     )
 
@@ -40,7 +40,7 @@ def _runfiles(ctx):
 
 def _pip_compile_impl(ctx):
     executable = ctx.actions.declare_file(ctx.attr.name)
-    _uv_pip_compile(ctx, ctx.file._template, executable)
+    _uv_pip_compile(ctx, ctx.file._template, executable, ctx.label)
     return DefaultInfo(
         executable = executable,
         runfiles = _runfiles(ctx),
@@ -57,7 +57,7 @@ _pip_compile = rule(
 
 def _pip_compile_test_impl(ctx):
     executable = ctx.actions.declare_file(ctx.attr.name)
-    _uv_pip_compile(ctx, ctx.file._template, executable)
+    _uv_pip_compile(ctx, ctx.file._template, executable, ctx.attr.generator_label.label)
     return DefaultInfo(
         executable = executable,
         runfiles = _runfiles(ctx),
@@ -65,6 +65,7 @@ def _pip_compile_test_impl(ctx):
 
 _pip_compile_test = rule(
     attrs = _common_attrs | {
+        "generator_label": attr.label(mandatory = True),
         "_template": attr.label(default = "//uv/private:pip_compile_test.sh", allow_single_file = True),
     },
     toolchains = [_PY_TOOLCHAIN],
@@ -85,6 +86,7 @@ def pip_compile(name, requirements_in = None, requirements_txt = None, target_co
 
     _pip_compile_test(
         name = name + "_diff_test",
+        generator_label = name,
         requirements_in = requirements_in or "//:requirements.in",
         requirements_txt = requirements_txt or "//:requirements.txt",
         python_platform = python_platform or "",
