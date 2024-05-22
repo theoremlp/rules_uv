@@ -1,9 +1,0 @@
-{
-  "branchPrefix": "renovate/",
-  "username": "renovate-thm[bot]",
-  "gitAuthor": "renovate <renovate-thm[bot]@users.noreply.github.com>",
-  "platform": "github",
-  "onboarding": false,
-  "forkProcessing": "disabled",
-  "repositories": ["theoremlp/rules_uv"]
-}
