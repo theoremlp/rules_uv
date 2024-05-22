@@ -26,15 +26,17 @@ $UV pip compile \
     --generate-hashes \
     --emit-index-url \
     --no-strip-extras \
-    --custom-compile-command "bazel run ${LABEL%_diff_test}" \
+    --custom-compile-command "bazel run ${LABEL}" \
     --python-version=$PYTHON_VERSION \
     $(echo $PYTHON_PLATFORM) \
     -o __updated__ \
     $REQUIREMENTS_IN
 
 # check files match
-if ! diff "$REQUIREMENTS_TXT" "__updated__" > /dev/null
+DIFF="$(diff "$REQUIREMENTS_TXT" "__updated__" || true)"
+if [ "$DIFF" != "" ]
 then
-  echo >&2 "FAIL: $REQUIREMENTS_TXT needs to be re-generated."
+  echo >&2 "FAIL: $REQUIREMENTS_TXT is out-of-date. Run 'bazel run $LABEL' to update."
+  echo >&2 "$DIFF"
   exit 1
 fi
