@@ -96,9 +96,9 @@ def pip_compile(
         target_compatible_with = None,
         python_platform = None,
         tags = None,
-        generate_hashes = False,
-        emit_index_url = False,
-        no_strip_extras = False,
+        generate_hashes = True,
+        emit_index_url = True,
+        no_strip_extras = True,
         custom_compile_command = None
     ):
     tags = tags or []
