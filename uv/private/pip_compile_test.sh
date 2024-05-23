@@ -8,6 +8,7 @@ RESOLVED_PYTHON="{{resolved_python}}"
 REQUIREMENTS_IN="{{requirements_in}}"
 REQUIREMENTS_TXT="{{requirements_txt}}"
 LABEL="{{label}}"
+PIP_COMPILE_ARGS='{{pip_compile_args}}'
 
 RESOLVED_PYTHON_BIN="$(dirname "$RESOLVED_PYTHON")"
 
@@ -20,13 +21,9 @@ cp "$REQUIREMENTS_TXT" __updated__
 # get the version of python to hand to uv pip compile
 PYTHON_VERSION="$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')"
 
-$UV pip compile \
+eval $UV pip compile \
     --quiet \
-    --no-cache \
-    --generate-hashes \
-    --emit-index-url \
-    --no-strip-extras \
-    --custom-compile-command "bazel run ${LABEL}" \
+    $PIP_COMPILE_ARGS \
     --python-version=$PYTHON_VERSION \
     $(echo $PYTHON_PLATFORM) \
     -o __updated__ \

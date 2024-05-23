@@ -27,8 +27,13 @@ pip_compile(
     name = "generate_requirements_txt",
     requirements_in = "//:requirements.in", # default
     requirements_txt = "//:requirements.txt", # default
+    generate_hashes = True, # default
+    emit_index_url = True, # default
+    no_strip_extras = True, # default
 )
 ```
+> [!NOTE]
+> You may also override the `--custom-compile-command` arg using the `custom_compile_command` kwarg.
 
 Run the compilation step with `bazel run //:generate_requirements_txt`.
 
