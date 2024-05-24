@@ -9,6 +9,12 @@ _common_attrs = {
     "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = "exec"),
 }
 
+def _python_version(py_toolchain):
+    return "{major}.{minor}".format(
+        major = py_toolchain.py3_runtime.interpreter_version_info.major,
+        minor = py_toolchain.py3_runtime.interpreter_version_info.minor,
+    )
+
 def _python_platform(maybe_python_platform):
     if maybe_python_platform == "":
         return ""
@@ -24,6 +30,7 @@ def _uv_pip_compile(ctx, template, executable, generator_label):
             "{{requirements_in}}": ctx.file.requirements_in.short_path,
             "{{requirements_txt}}": ctx.file.requirements_txt.short_path,
             "{{resolved_python}}": py_toolchain.py3_runtime.interpreter.short_path,
+            "{{python_version}}": _python_version(py_toolchain),
             "{{python_platform}}": _python_platform(ctx.attr.python_platform),
             "{{label}}": str(generator_label),
         },
