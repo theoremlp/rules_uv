@@ -3,9 +3,9 @@
     "binaries": [
       {
         "kind": "archive",
-        "url": "https://github.com/astral-sh/uv/releases/download/0.2.3/uv-aarch64-unknown-linux-gnu.tar.gz",
-        "file": "uv-aarch64-unknown-linux-gnu/uv",
-        "sha256": "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.2.3/uv-aarch64-unknown-linux-musl.tar.gz",
+        "file": "uv-aarch64-unknown-linux-musl/uv",
+        "sha256": "8574f4d4c56b87eb0e9041f984d8e79d98c53d2183533c2196f8a6dd16944929",
         "os": "linux",
         "cpu": "arm64"
       },
