@@ -34,6 +34,13 @@ Run the compilation step with `bazel run //:generate_requirements_txt`.
 
 This will automatically register a diff test with name `[name]_diff_test`.
 
+Additionally, you can specify the following optional args:
+
+- `python_platform`: the `uv pip compile` compatible `--python-platform` value to pass to uv
+- `args`: override the default arguments passed to uv (`--generate-hashes`, `--emit-index-url` and `--no-strip-extras`)
+- `tags`: tags to apply to the test target
+- `target_compatible_with`: restrict targets to running on the specified Bazel platform
+
 ### create_venv
 
 Create a virtual environment creation target:
