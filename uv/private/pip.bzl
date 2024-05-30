@@ -136,7 +136,6 @@ def pip_compile(
       [name]_diff_test: a testable target that will check that requirements_txt is up to date with requirements_in
     """
     tags = tags or []
-    args = args or _DEFAULT_ARGS
 
     _pip_compile(
         name = name,
