@@ -2,18 +2,19 @@
 
 _PY_TOOLCHAIN = "@bazel_tools//tools/python:toolchain_type"
 
-_COMMON_ATTRS = {
-    "requirements_in": attr.label(mandatory = True, allow_single_file = True),
-    "requirements_txt": attr.label(mandatory = True, allow_single_file = True),
-    "python_platform": attr.string(),
-    "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = "exec"),
-}
-
 _DEFAULT_ARGS = [
     "--generate-hashes",
     "--emit-index-url",
     "--no-strip-extras",
 ]
+
+_COMMON_ATTRS = {
+    "requirements_in": attr.label(mandatory = True, allow_single_file = True),
+    "requirements_txt": attr.label(mandatory = True, allow_single_file = True),
+    "python_platform": attr.string(),
+    "uv_args": attr.string_list(default = _DEFAULT_ARGS),
+    "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = "exec"),
+}
 
 def _python_version(py_toolchain):
     return "{major}.{minor}".format(
@@ -26,23 +27,23 @@ def _uv_pip_compile(
         template,
         executable,
         generator_label,
-        args):
+        uv_args):
     py_toolchain = ctx.toolchains[_PY_TOOLCHAIN]
     compile_command = "bazel run {label}".format(label = str(generator_label))
 
-    cmd_args = []
-    cmd_args += args
-    cmd_args.append("--custom-compile-command='{compile_command}'".format(compile_command = compile_command))
-    cmd_args.append("--python-version={version}".format(version = _python_version(py_toolchain)))
+    args = []
+    args += uv_args
+    args.append("--custom-compile-command='{compile_command}'".format(compile_command = compile_command))
+    args.append("--python-version={version}".format(version = _python_version(py_toolchain)))
     if ctx.attr.python_platform:
-        cmd_args.append("--python-platform={platform}".format(platform = ctx.attr.python_platform))
+        args.append("--python-platform={platform}".format(platform = ctx.attr.python_platform))
 
     ctx.actions.expand_template(
         template = template,
         output = executable,
         substitutions = {
             "{{uv}}": ctx.executable._uv.short_path,
-            "{{args}}": " \\\n    ".join(cmd_args),
+            "{{args}}": " \\\n    ".join(args),
             "{{requirements_in}}": ctx.file.requirements_in.short_path,
             "{{requirements_txt}}": ctx.file.requirements_txt.short_path,
             "{{compile_command}}": compile_command,
@@ -66,7 +67,7 @@ def _pip_compile_impl(ctx):
         template = ctx.file._template,
         executable = executable,
         generator_label = ctx.label,
-        args = ctx.attr.args,
+        uv_args = ctx.attr.uv_args,
     )
     return DefaultInfo(
         executable = executable,
@@ -89,7 +90,7 @@ def _pip_compile_test_impl(ctx):
         template = ctx.file._template,
         executable = executable,
         generator_label = ctx.attr.generator_label.label,
-        args = ctx.attr.args,
+        uv_args = ctx.attr.uv_args,
     )
     return DefaultInfo(
         executable = executable,
@@ -143,7 +144,7 @@ def pip_compile(
         requirements_txt = requirements_txt or "//:requirements.txt",
         python_platform = python_platform,
         target_compatible_with = target_compatible_with,
-        args = args,
+        uv_args = args,
     )
 
     _pip_compile_test(
@@ -153,6 +154,6 @@ def pip_compile(
         requirements_txt = requirements_txt or "//:requirements.txt",
         python_platform = python_platform or "",
         target_compatible_with = target_compatible_with,
-        args = args,
+        uv_args = args,
         tags = ["requires-network"] + tags,
     )
