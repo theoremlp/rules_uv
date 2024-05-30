@@ -24,4 +24,4 @@ $UV pip compile \
     $(echo $PYTHON_PLATFORM) \
     -o "$REQUIREMENTS_TXT" \
     "$REQUIREMENTS_IN" \
-    {{extra_arguments}} "$@"
+    "$@"

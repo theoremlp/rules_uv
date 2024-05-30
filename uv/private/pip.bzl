@@ -3,9 +3,6 @@
 _PY_TOOLCHAIN = "@bazel_tools//tools/python:toolchain_type"
 
 _common_attrs = {
-    "uv_args": attr.string_list(doc="""\
-A list of arguments to bake into the uv script. This means that the arguments
-will be used even if the user invokes uv via `bazel run //:uv_rule -- <extra_args>`"""),
     "requirements_in": attr.label(mandatory = True, allow_single_file = True),
     "requirements_txt": attr.label(mandatory = True, allow_single_file = True),
     "python_platform": attr.string(default = ""),
@@ -36,7 +33,6 @@ def _uv_pip_compile(ctx, template, executable, generator_label):
             "{{python_version}}": _python_version(py_toolchain),
             "{{python_platform}}": _python_platform(ctx.attr.python_platform),
             "{{label}}": str(generator_label),
-            "{{extra_arguments}}": " ".join(ctx.attr.uv_args or [])
         },
     )
 
@@ -95,7 +91,7 @@ def pip_compile(
         requirements_txt = requirements_txt or "//:requirements.txt",
         python_platform = python_platform or "",
         target_compatible_with = target_compatible_with,
-        uv_args = args,
+        args = args,
     )
 
     _pip_compile_test(
@@ -106,5 +102,5 @@ def pip_compile(
         python_platform = python_platform or "",
         target_compatible_with = target_compatible_with,
         tags = ["requires-network"] + tags,
-        uv_args = args,
+        args = args,
     )
