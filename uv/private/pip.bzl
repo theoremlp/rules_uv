@@ -36,7 +36,7 @@ def _uv_pip_compile(ctx, template, executable, generator_label):
             "{{python_version}}": _python_version(py_toolchain),
             "{{python_platform}}": _python_platform(ctx.attr.python_platform),
             "{{label}}": str(generator_label),
-            "{{extra_arguments}}": " ".join(ctx.attr.uv_args)
+            "{{extra_arguments}}": " ".join(ctx.attr.uv_args or [])
         },
     )
 
