@@ -13,7 +13,7 @@ export PATH="$RESOLVED_PYTHON_BIN:$PATH"
 
 # make a writable copy of incoming requirements
 cp "$REQUIREMENTS_TXT" __updated__
-  
+
 {{uv}} pip compile \
     --quiet \
     --no-cache \
