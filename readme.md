@@ -78,7 +78,9 @@ multirun(
         ":generate_requirements_linux_txt",
         ":generate_requirements_macos_txt",
     ],
-    jobs = 0,
+    # Running in a single threaded mode allows consecutive `uv` invocations to benefit
+    # from the `uv` cache from the first run.
+    jobs = 1,
 )
 
 create_venv(
