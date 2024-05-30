@@ -25,7 +25,7 @@ cp "$REQUIREMENTS_TXT" __updated__
 DIFF="$(diff "$REQUIREMENTS_TXT" "__updated__" || true)"
 if [ "$DIFF" != "" ]
 then
-  echo >&2 "FAIL: $REQUIREMENTS_TXT is out-of-date. Run '$compile_command' to update."
+  echo >&2 "FAIL: $REQUIREMENTS_TXT is out-of-date. Run '$COMPILE_COMMAND' to update."
   echo >&2 "$DIFF"
   exit 1
 fi
