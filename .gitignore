@@ -4,3 +4,4 @@ bazel-testlogs/
 bazel-*
 
 venv/
+.venv/

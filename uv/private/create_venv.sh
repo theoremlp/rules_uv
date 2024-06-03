@@ -15,7 +15,7 @@ if [ $# -gt 1 ]; then
   echo "create-venv takes one optional argument, the path to the virtual environment."
   exit -1
 elif [ $# == 0 ] || [ -z "$1" ]; then
-  target="venv"
+  target="{{destination_folder}}"
 else
   target="$1"
 fi

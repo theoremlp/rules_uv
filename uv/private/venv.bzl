@@ -11,6 +11,7 @@ def _uv_template(ctx, template, executable):
             "{{uv}}": ctx.executable._uv.short_path,
             "{{requirements_txt}}": ctx.file.requirements_txt.short_path,
             "{{resolved_python}}": py_toolchain.py3_runtime.interpreter.short_path,
+            "{{destination_folder}}": ctx.attr.destination_folder,
         },
     )
 
@@ -33,6 +34,7 @@ def _venv_impl(ctx):
 
 _venv = rule(
     attrs = {
+        "destination_folder": attr.string(default = "venv"),
         "requirements_txt": attr.label(mandatory = True, allow_single_file = True),
         "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = "exec"),
         "_template": attr.label(default = "//uv/private:create_venv.sh", allow_single_file = True),
@@ -42,9 +44,10 @@ _venv = rule(
     executable = True,
 )
 
-def create_venv(name, requirements_txt = None, target_compatible_with = None):
+def create_venv(name, requirements_txt = None, target_compatible_with = None, destination_folder = None):
     _venv(
         name = name,
+        destination_folder = destination_folder,
         requirements_txt = requirements_txt or "//:requirements.txt",
         target_compatible_with = target_compatible_with,
     )

@@ -10,3 +10,8 @@ pip_compile(
 )
 
 create_venv(name = "create-venv")
+
+create_venv(
+    name = "create-venv-custom-destination",
+    destination_folder = ".venv",
+)
