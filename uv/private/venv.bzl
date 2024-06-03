@@ -34,7 +34,7 @@ def _venv_impl(ctx):
 
 _venv = rule(
     attrs = {
-        "destination_folder": attr.string(mandatory = True),
+        "destination_folder": attr.string(mandatory = True, default = "venv"),
         "requirements_txt": attr.label(mandatory = True, allow_single_file = True),
         "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = "exec"),
         "_template": attr.label(default = "//uv/private:create_venv.sh", allow_single_file = True),
@@ -44,7 +44,7 @@ _venv = rule(
     executable = True,
 )
 
-def create_venv(name, requirements_txt = None, target_compatible_with = None, destination_folder = "venv"):
+def create_venv(name, requirements_txt = None, target_compatible_with = None, destination_folder = None):
     _venv(
         name = name,
         destination_folder = destination_folder,
