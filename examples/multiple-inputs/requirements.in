@@ -1,0 +1,3 @@
+-r requirements.test.in
+
+click~=8.1.7

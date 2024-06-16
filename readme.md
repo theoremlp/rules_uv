@@ -38,6 +38,7 @@ Additionally, you can specify the following optional args:
 
 - `python_platform`: the `uv pip compile` compatible `--python-platform` value to pass to uv
 - `args`: override the default arguments passed to uv (`--generate-hashes`, `--emit-index-url` and `--no-strip-extras`)
+- `data`: pass additional files to be present when generating and testing requirements txt files (see also [examples/multiple-inputs](examples/multiple-inputs/))
 - `tags`: tags to apply to the test target
 - `target_compatible_with`: restrict targets to running on the specified Bazel platform
 

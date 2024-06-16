@@ -12,6 +12,7 @@ _COMMON_ATTRS = {
     "requirements_in": attr.label(mandatory = True, allow_single_file = True),
     "requirements_txt": attr.label(mandatory = True, allow_single_file = True),
     "python_platform": attr.string(),
+    "data": attr.label_list(allow_files = True),
     "uv_args": attr.string_list(default = _DEFAULT_ARGS),
     "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = "exec"),
 }
@@ -54,7 +55,7 @@ def _uv_pip_compile(
 def _runfiles(ctx):
     py_toolchain = ctx.toolchains[_PY_TOOLCHAIN]
     runfiles = ctx.runfiles(
-        files = [ctx.file.requirements_in, ctx.file.requirements_txt],
+        files = [ctx.file.requirements_in, ctx.file.requirements_txt] + ctx.files.data,
         transitive_files = py_toolchain.py3_runtime.files,
     )
     runfiles = runfiles.merge(ctx.attr._uv.default_runfiles)
@@ -114,6 +115,7 @@ def pip_compile(
         target_compatible_with = None,
         python_platform = None,
         args = None,
+        data = None,
         tags = None):
     """
     Produce targets to compile a requirements.in or pyproject.toml file into a requirements.txt file.
@@ -129,6 +131,7 @@ def pip_compile(
            --generate-hashes  (Include distribution hashes in the output file)
            --emit-index-url   (Include `--index-url` and `--extra-index-url` entries in the generated output file)
            --no-strip-extras  (Include extras in the output file)
+        data: (optional) a list of labels of additional files to include
         tags: (optional) tags to apply to the generated test target
 
     Targets produced by this macro are:
@@ -143,6 +146,7 @@ def pip_compile(
         requirements_txt = requirements_txt or "//:requirements.txt",
         python_platform = python_platform,
         target_compatible_with = target_compatible_with,
+        data = data,
         uv_args = args,
     )
 
@@ -153,6 +157,7 @@ def pip_compile(
         requirements_txt = requirements_txt or "//:requirements.txt",
         python_platform = python_platform or "",
         target_compatible_with = target_compatible_with,
+        data = data,
         uv_args = args,
         tags = ["requires-network"] + tags,
     )
