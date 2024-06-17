@@ -7,10 +7,6 @@ REQUIREMENTS_IN="{{requirements_in}}"
 REQUIREMENTS_TXT="{{requirements_txt}}"
 COMPILE_COMMAND="{{compile_command}}"
 
-# set resolved python to front of the path
-RESOLVED_PYTHON_BIN="$(dirname "{{resolved_python}}")"
-export PATH="$RESOLVED_PYTHON_BIN:$PATH"
-
 # make a writable copy of incoming requirements
 cp "$REQUIREMENTS_TXT" __updated__
 
