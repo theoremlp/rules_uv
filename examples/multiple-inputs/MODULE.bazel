@@ -1,0 +1,14 @@
+"example of rules_uv with multiple .in files"
+
+module(
+    name = "uv__examples__multiple_inputs",
+    version = "0.0.0",
+)
+
+bazel_dep(name = "platforms", version = "0.0.8")
+bazel_dep(name = "rules_python", version = "0.31.0")
+bazel_dep(name = "rules_uv", version = "0.0.0")
+local_path_override(
+    module_name = "rules_uv",
+    path = "../..",
+)

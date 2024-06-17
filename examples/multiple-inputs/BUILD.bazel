@@ -1,0 +1,9 @@
+load("@rules_uv//uv:pip.bzl", "pip_compile")
+load("@rules_uv//uv:venv.bzl", "create_venv")
+
+pip_compile(
+    name = "generate_requirements_txt",
+    data = ["//:requirements.test.in"],
+)
+
+create_venv(name = "create-venv")

@@ -1,0 +1,5 @@
+common --enable_bzlmod
+
+common --lockfile_mode=off
+
+test --test_output=errors
