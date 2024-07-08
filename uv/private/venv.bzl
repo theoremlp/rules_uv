@@ -4,6 +4,7 @@ _PY_TOOLCHAIN = "@bazel_tools//tools/python:toolchain_type"
 
 def _uv_template(ctx, template, executable):
     py_toolchain = ctx.toolchains[_PY_TOOLCHAIN]
+
     ctx.actions.expand_template(
         template = template,
         output = executable,
@@ -12,13 +13,14 @@ def _uv_template(ctx, template, executable):
             "{{requirements_txt}}": ctx.file.requirements_txt.short_path,
             "{{resolved_python}}": py_toolchain.py3_runtime.interpreter.short_path,
             "{{destination_folder}}": ctx.attr.destination_folder,
+            "{{site_packages_extra_files}}": " ".join(["'" + file.short_path + "'" for file in ctx.files.site_packages_extra_files]),
         },
     )
 
 def _runfiles(ctx):
     py_toolchain = ctx.toolchains[_PY_TOOLCHAIN]
     runfiles = ctx.runfiles(
-        files = [ctx.file.requirements_txt],
+        files = [ctx.file.requirements_txt] + ctx.files.site_packages_extra_files,
         transitive_files = py_toolchain.py3_runtime.files,
     )
     runfiles = runfiles.merge(ctx.attr._uv.default_runfiles)
@@ -35,6 +37,7 @@ def _venv_impl(ctx):
 _venv = rule(
     attrs = {
         "destination_folder": attr.string(default = "venv"),
+        "site_packages_extra_files": attr.label_list(default = [], doc = "Files to add to the site-packages folder inside the virtual environment. Useful for adding `sitecustomize.py` or `.pth` files", allow_files = True),
         "requirements_txt": attr.label(mandatory = True, allow_single_file = True),
         "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = "exec"),
         "_template": attr.label(default = "//uv/private:create_venv.sh", allow_single_file = True),
@@ -44,10 +47,11 @@ _venv = rule(
     executable = True,
 )
 
-def create_venv(name, requirements_txt = None, target_compatible_with = None, destination_folder = None):
+def create_venv(name, requirements_txt = None, target_compatible_with = None, destination_folder = None, site_packages_extra_files = []):
     _venv(
         name = name,
         destination_folder = destination_folder,
+        site_packages_extra_files = site_packages_extra_files,
         requirements_txt = requirements_txt or "//:requirements.txt",
         target_compatible_with = target_compatible_with,
     )
