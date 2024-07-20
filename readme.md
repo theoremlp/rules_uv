@@ -30,6 +30,8 @@ pip_compile(
 )
 ```
 
+Ensure both requirements.in and requirements.txt exist (the latter must exist but may be empty).
+
 Run the compilation step with `bazel run //:generate_requirements_txt`.
 
 This will automatically register a diff test with name `[name]_diff_test`.
