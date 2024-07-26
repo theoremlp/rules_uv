@@ -116,7 +116,8 @@ def pip_compile(
         python_platform = None,
         args = None,
         data = None,
-        tags = None):
+        tags = None,
+        **kwargs):
     """
     Produce targets to compile a requirements.in or pyproject.toml file into a requirements.txt file.
 
@@ -133,6 +134,7 @@ def pip_compile(
            --no-strip-extras  (Include extras in the output file)
         data: (optional) a list of labels of additional files to include
         tags: (optional) tags to apply to the generated test target
+        **kwargs: (optional) other fields passed through to all underlying rules
 
     Targets produced by this macro are:
       [name]: a runnable target that will use requirements_in to generate and overwrite requirements_txt
@@ -148,6 +150,7 @@ def pip_compile(
         target_compatible_with = target_compatible_with,
         data = data,
         uv_args = args,
+        **kwargs
     )
 
     _pip_compile_test(
@@ -160,4 +163,5 @@ def pip_compile(
         data = data,
         uv_args = args,
         tags = ["requires-network"] + tags,
+        **kwargs
     )
