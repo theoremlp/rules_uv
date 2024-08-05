@@ -31,10 +31,12 @@ source "$BUILD_WORKSPACE_DIRECTORY/$target/bin/activate"
 "$UV" pip install -r "$REQUIREMENTS_TXT"
 
 site_packages_extra_files=({{site_packages_extra_files}})
-site_packages_dir=$(find "$BUILD_WORKSPACE_DIRECTORY/$target/lib" -type d -name 'site-packages')
-for file in "${site_packages_extra_files[@]}"; do
-  cp "$file" "$site_packages_dir"/
-done
+if [ ! -z ${site_packages_extra_files+x} ]; then
+  site_packages_dir=$(find "$BUILD_WORKSPACE_DIRECTORY/$target/lib" -type d -name 'site-packages')
+  for file in "${site_packages_extra_files[@]}"; do
+    cp "$file" "$site_packages_dir"/
+  done
+fi
 
 echo "${bold}Created '${target}', to activate run:${normal}"
 echo "  source ${target}/bin/activate"
