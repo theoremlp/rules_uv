@@ -1,4 +1,5 @@
 "uv based pip compile rules"
+load("@rules_python//python:defs.bzl", "PyRuntimeInfo")
 
 _PY_TOOLCHAIN = "@bazel_tools//tools/python:toolchain_type"
 
@@ -12,6 +13,7 @@ _COMMON_ATTRS = {
     "requirements_in": attr.label(mandatory = True, allow_single_file = True),
     "requirements_txt": attr.label(mandatory = True, allow_single_file = True),
     "python_platform": attr.string(),
+    "py3_runtime": attr.label(),
     "data": attr.label_list(allow_files = True),
     "uv_args": attr.string_list(default = _DEFAULT_ARGS),
     "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = "exec"),
@@ -24,6 +26,8 @@ def _python_version(py3_runtime):
     )
 
 def _python_runtime(ctx):
+    if ctx.attr.py3_runtime:
+        return ctx.attr.py3_runtime[PyRuntimeInfo]
     py_toolchain = ctx.toolchains[_PY_TOOLCHAIN]
     return py_toolchain.py3_runtime
 
