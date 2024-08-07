@@ -138,7 +138,7 @@ def pip_compile(
 
     Targets produced by this macro are:
       [name]: a runnable target that will use requirements_in to generate and overwrite requirements_txt
-      [name]_diff_test: a testable target that will check that requirements_txt is up to date with requirements_in
+      [name]_test: a testable target that will check that requirements_txt is up to date with requirements_in
     """
     tags = tags or []
 
@@ -154,7 +154,7 @@ def pip_compile(
     )
 
     _pip_compile_test(
-        name = name + "_diff_test",
+        name = name + "_test",
         generator_label = name,
         requirements_in = requirements_in or "//:requirements.in",
         requirements_txt = requirements_txt or "//:requirements.txt",
