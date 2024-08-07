@@ -17,11 +17,15 @@ _COMMON_ATTRS = {
     "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = "exec"),
 }
 
-def _python_version(py_toolchain):
+def _python_version(py3_runtime):
     return "{major}.{minor}".format(
-        major = py_toolchain.py3_runtime.interpreter_version_info.major,
-        minor = py_toolchain.py3_runtime.interpreter_version_info.minor,
+        major = py3_runtime.interpreter_version_info.major,
+        minor = py3_runtime.interpreter_version_info.minor,
     )
+
+def _python_runtime(ctx):
+    py_toolchain = ctx.toolchains[_PY_TOOLCHAIN]
+    return py_toolchain.py3_runtime
 
 def _uv_pip_compile(
         ctx,
@@ -29,14 +33,14 @@ def _uv_pip_compile(
         executable,
         generator_label,
         uv_args):
-    py_toolchain = ctx.toolchains[_PY_TOOLCHAIN]
+    py3_runtime = _python_runtime(ctx)
     compile_command = "bazel run {label}".format(label = str(generator_label))
 
     args = []
     args += uv_args
     args.append("--custom-compile-command='{compile_command}'".format(compile_command = compile_command))
-    args.append("--python={python}".format(python = py_toolchain.py3_runtime.interpreter.short_path))
-    args.append("--python-version={version}".format(version = _python_version(py_toolchain)))
+    args.append("--python={python}".format(python = py3_runtime.interpreter.short_path))
+    args.append("--python-version={version}".format(version = _python_version(py3_runtime)))
     if ctx.attr.python_platform:
         args.append("--python-platform={platform}".format(platform = ctx.attr.python_platform))
 
@@ -53,10 +57,10 @@ def _uv_pip_compile(
     )
 
 def _runfiles(ctx):
-    py_toolchain = ctx.toolchains[_PY_TOOLCHAIN]
+    py3_runtime = _python_runtime(ctx)
     runfiles = ctx.runfiles(
         files = [ctx.file.requirements_in, ctx.file.requirements_txt] + ctx.files.data,
-        transitive_files = py_toolchain.py3_runtime.files,
+        transitive_files = py3_runtime.files,
     )
     runfiles = runfiles.merge(ctx.attr._uv.default_runfiles)
     return runfiles
