@@ -138,6 +138,7 @@ def pip_compile(
 
     Targets produced by this macro are:
       [name]: a runnable target that will use requirements_in to generate and overwrite requirements_txt
+      [name].update: an alias for [name]
       [name]_test: a testable target that will check that requirements_txt is up to date with requirements_in
     """
     tags = tags or []
@@ -151,6 +152,13 @@ def pip_compile(
         data = data,
         uv_args = args,
         **kwargs
+    )
+
+    # Also allow 'bazel run' with a "custom verb" https://bazel.build/rules/verbs-tutorial
+    # Provides compatibility with rules_python's compile_pip_requirements [name].update target.
+    native.alias(
+        name = name + ".update",
+        actual = name,
     )
 
     _pip_compile_test(
