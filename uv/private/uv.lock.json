@@ -33,6 +33,14 @@
         "sha256": "62764007f4553f3677ef86e864097405d1b054e8a62e89f047e545816347491c",
         "os": "macos",
         "cpu": "x86_64"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.2.34/uv-x86_64-pc-windows-msvc.zip",
+        "file": "uv-x86_64-pc-windows/uv",
+        "sha256": "d237ebacb6f4a651fbad3af702f29b8262b825e070c87e9020d5164936459393",
+        "os": "windows",
+        "cpu": "x86_64"
       }
     ]
   }
