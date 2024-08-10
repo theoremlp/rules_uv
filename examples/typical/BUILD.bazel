@@ -9,10 +9,10 @@ pip_compile(
     requirements_txt = "requirements_linux.txt",
 )
 
-create_venv(name = "create-venv")
+create_venv(name = "create-venv.cmd")
 
 create_venv(
-    name = "create-venv-custom-destination",
+    name = "create-venv-custom-destination.cmd",
     destination_folder = ".venv",
     site_packages_extra_files = [
         "site_packages_extra/sitecustomize.py",

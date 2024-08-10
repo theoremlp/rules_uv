@@ -6,4 +6,4 @@ pip_compile(
     data = ["//:requirements.test.in"],
 )
 
-create_venv(name = "create-venv")
+create_venv(name = "create-venv.cmd")

@@ -3,3 +3,6 @@ common --enable_bzlmod
 common --lockfile_mode=off
 
 test --test_output=errors
+
+startup --windows_enable_symlinks
+common --enable_runfiles
