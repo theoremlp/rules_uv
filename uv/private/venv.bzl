@@ -6,13 +6,15 @@ def _uv_template(ctx, template, executable):
     py_toolchain = ctx.toolchains[_PY_TOOLCHAIN]
     if ctx.attr.on_windows:
         site_packages_extra_files = " ".join(['"' + file.short_path.replace("/", "\\") + '"' for file in ctx.files.site_packages_extra_files])
+        uv = ctx.executable._uv.short_path.replace("/", "\\")
     else:
         site_packages_extra_files = " ".join(["'" + file.short_path + "'" for file in ctx.files.site_packages_extra_files])
+        uv = ctx.executable._uv.short_path
     ctx.actions.expand_template(
         template = template,
         output = executable,
         substitutions = {
-            "{{uv}}": ctx.executable._uv.short_path.replace("/", "\\"),
+            "{{uv}}": uv,
             "{{requirements_txt}}": ctx.file.requirements_txt.short_path,
             "{{resolved_python}}": py_toolchain.py3_runtime.interpreter.short_path,
             "{{destination_folder}}": ctx.attr.destination_folder,

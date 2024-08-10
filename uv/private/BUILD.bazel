@@ -4,7 +4,9 @@ exports_files([
     "create_venv.sh",
     "create_venv.bat",
     "pip_compile_test.sh",
+    "pip_compile_test.bat",
     "pip_compile.sh",
+    "pip_compile.bat",
 ])
 
 bzl_library(

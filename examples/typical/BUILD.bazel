@@ -1,12 +1,16 @@
 load("@rules_uv//uv:pip.bzl", "pip_compile")
 load("@rules_uv//uv:venv.bzl", "create_venv")
 
-pip_compile(name = "generate_requirements_txt")
+pip_compile(
+    name = "generate_requirements_txt.cmd",
+    test_name = "generate_requirements_txt_test.cmd",
+)
 
 pip_compile(
-    name = "generate_requirements_linux_txt",
+    name = "generate_requirements_linux_txt.cmd",
     python_platform = "x86_64-unknown-linux-gnu",
     requirements_txt = "requirements_linux.txt",
+    test_name = "generate_requirements_linux_txt_test.cmd",
 )
 
 create_venv(name = "create-venv.cmd")
