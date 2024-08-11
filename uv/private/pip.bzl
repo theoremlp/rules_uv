@@ -45,8 +45,8 @@ def _uv_pip_compile(
         requirements_in = ctx.file.requirements_in.short_path.replace("/", "\\")
         requirements_txt = ctx.file.requirements_txt.short_path.replace("/", "\\")
         args = [arg.replace("/", "\\") for arg in args]
-        args = " ^\n    ".join(args)
         args.append('--custom-compile-command="{compile_command}"'.format(compile_command = compile_command))
+        args = " ^\n    ".join(args)
     else:
         args.append("--custom-compile-command='{compile_command}'".format(compile_command = compile_command))
         uv = ctx.executable._uv.short_path
