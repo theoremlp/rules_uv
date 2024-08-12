@@ -93,10 +93,17 @@ def _pip_compile_test_impl(ctx):
         generator_label = ctx.attr.generator_label.label,
         uv_args = ctx.attr.uv_args,
     )
-    return DefaultInfo(
-        executable = executable,
-        runfiles = _runfiles(ctx),
-    )
+    return [
+        DefaultInfo(
+            executable = executable,
+            runfiles = _runfiles(ctx),
+        ),
+        RunEnvironmentInfo(
+            # Ensures that .netrc can be detected by uv
+            # See https://github.com/theoremlp/rules_uv/issues/103
+            inherited_environment = ["HOME"],
+        ),
+    ]
 
 _pip_compile_test = rule(
     attrs = _COMMON_ATTRS | {
