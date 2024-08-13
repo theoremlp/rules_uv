@@ -18,9 +18,12 @@ _COMMON_ATTRS = {
 }
 
 def _python_version(py_toolchain):
-    return "{major}.{minor}".format(
+    # micro is useful when there are some packages that exclude .0 versions due
+    # to a bug, such as !=3.11.0
+    return "{major}.{minor}.{micro}".format(
         major = py_toolchain.py3_runtime.interpreter_version_info.major,
         minor = py_toolchain.py3_runtime.interpreter_version_info.minor,
+        micro = py_toolchain.py3_runtime.interpreter_version_info.micro,
     )
 
 def _uv_pip_compile(
