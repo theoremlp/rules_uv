@@ -61,6 +61,16 @@ Create a virtual environment with default path `venv` by running `bazel run //:c
 
 The created venv will use the default Python 3 runtime defined in rules_python.
 
+If you want to use this script cross-platform including Windows, you _must_ use a `.cmd` or `.bat` ending
+for the command name (e.g., `name = "create_venv.cmd"`) since Windows expects to identify the executable scripts by the file ending of the target.
+For this target to work on Windows, you also have to enable symlinks and enable runfiles. If you want to add this options to 
+your `.bazelrc` file, you can do so with
+
+```
+startup --windows_enable_symlinks
+common --enable_runfiles
+```
+
 ## Multi-platform setup
 
 `uv` supports generating platform-specific requirements files, and `rules_uv` exposes this configuration, and a multi-platform setup might look like this:

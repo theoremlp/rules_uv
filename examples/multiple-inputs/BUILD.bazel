@@ -2,8 +2,9 @@ load("@rules_uv//uv:pip.bzl", "pip_compile")
 load("@rules_uv//uv:venv.bzl", "create_venv")
 
 pip_compile(
-    name = "generate_requirements_txt",
+    name = "generate_requirements_txt.cmd",
     data = ["//:requirements.test.in"],
+    test_name = "generate_requirements_txt_test.cmd",
 )
 
-create_venv(name = "create-venv")
+create_venv(name = "create-venv.cmd")
