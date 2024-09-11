@@ -14,4 +14,3 @@ transition_to_target = transition(
     inputs = ["//command_line_option:platforms"],
     outputs = ["//command_line_option:extra_execution_platforms"],
 )
-
