@@ -1,4 +1,5 @@
-# Helper rule to ensure that uv is resolved for the target architecture
+"Helper rule to ensure that uv is resolved for the target architecture"
+
 def _transition_to_target_impl(settings, _attr):
     return {
         # String conversion is needed to prevent a crash with Bazel 6.x.
