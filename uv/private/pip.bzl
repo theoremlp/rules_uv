@@ -1,6 +1,7 @@
 "uv based pip compile rules"
 
 load("@rules_python//python:defs.bzl", "PyRuntimeInfo")
+load(":transition_to_target.bzl", "transition_to_target")
 
 _PY_TOOLCHAIN = "@bazel_tools//tools/python:toolchain_type"
 
@@ -17,7 +18,7 @@ _COMMON_ATTRS = {
     "py3_runtime": attr.label(),
     "data": attr.label_list(allow_files = True),
     "uv_args": attr.string_list(default = _DEFAULT_ARGS),
-    "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = "exec"),
+    "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = transition_to_target),
 }
 
 def _python_version(py3_runtime):
@@ -70,7 +71,7 @@ def _runfiles(ctx):
         files = [ctx.file.requirements_in, ctx.file.requirements_txt] + ctx.files.data,
         transitive_files = py3_runtime.files,
     )
-    runfiles = runfiles.merge(ctx.attr._uv.default_runfiles)
+    runfiles = runfiles.merge(ctx.attr._uv[0].default_runfiles)
     return runfiles
 
 def _pip_compile_impl(ctx):
