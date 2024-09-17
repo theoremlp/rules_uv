@@ -1,5 +1,7 @@
 "uv based pip compile rules"
 
+load("@bazel_skylib//lib:types.bzl", "types")
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
 load("//uv/private:pip.bzl", "pip_compile_test", _pip_compile = "pip_compile")
 
 def pip_compile(
@@ -18,6 +20,7 @@ def pip_compile(
     Args:
         name: name of the primary compilation target.
         requirements_in: (optional, default "//:requirements.in") a label for the requirements.in file.
+            May also be provided as a list of strings which represent the requirements file lines.
         requirements_txt: (optional, default "//:requirements.txt") a label for the requirements.txt file.
         python_platform: (optional) a uv pip compile compatible value for --python-platform.
         target_compatible_with: (optional) specify that a particular target is compatible only with certain
@@ -38,6 +41,14 @@ def pip_compile(
     requirements_in = requirements_in or "//:requirements.in"
     requirements_txt = requirements_txt or "//:requirements.txt"
     tags = tags or []
+    if types.is_list(requirements_in):
+        write_target = "_{}.write".format(name)
+        write_file(
+            name = write_target,
+            out = "_{}.in".format(name),
+            content = requirements_in,
+        )
+        requirements_in = write_target
 
     _pip_compile(
         name = name,
