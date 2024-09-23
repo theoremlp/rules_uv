@@ -9,6 +9,12 @@ pip_compile(
     requirements_txt = "requirements_linux.txt",
 )
 
+pip_compile(
+    name = "generate_requirements_twine",
+    requirements_in = ["twine"],
+    requirements_txt = "requirements_twine.txt",
+)
+
 create_venv(name = "create-venv")
 
 create_venv(
