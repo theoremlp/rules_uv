@@ -11,7 +11,7 @@ pip_compile(
 
 pip_compile(
     name = "generate_requirements_twine",
-    requirements_in = ["twine"],
+    requirements_in = ["twine~=5.1.1"],
     requirements_txt = "requirements_twine.txt",
 )
 
