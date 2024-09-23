@@ -11,6 +11,7 @@ pip_compile(
 
 pip_compile(
     name = "generate_requirements_twine",
+    python_platform = "x86_64-unknown-linux-gnu",
     requirements_in = ["twine~=5.1.1"],
     requirements_txt = "requirements_twine.txt",
 )
