@@ -28,7 +28,7 @@ fi
 
 "$UV" venv "$BUILD_WORKSPACE_DIRECTORY/$target" --python "$PYTHON"
 source "$BUILD_WORKSPACE_DIRECTORY/$target/bin/activate"
-"$UV" pip install -r "$REQUIREMENTS_TXT"
+"$UV" pip install -r "$REQUIREMENTS_TXT" {{args}}
 
 site_packages_extra_files=({{site_packages_extra_files}})
 if [ ! -z ${site_packages_extra_files+x} ]; then
