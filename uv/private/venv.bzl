@@ -16,6 +16,7 @@ def _uv_template(ctx, template, executable):
             "{{resolved_python}}": py_toolchain.py3_runtime.interpreter.short_path,
             "{{destination_folder}}": ctx.attr.destination_folder,
             "{{site_packages_extra_files}}": " ".join(["'" + file.short_path + "'" for file in ctx.files.site_packages_extra_files]),
+            "{{args}}": " \\\n    ".join(ctx.attr.uv_args),
         },
     )
 
@@ -43,17 +44,19 @@ _venv = rule(
         "requirements_txt": attr.label(mandatory = True, allow_single_file = True),
         "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = transition_to_target),
         "_template": attr.label(default = "//uv/private:create_venv.sh", allow_single_file = True),
+        "uv_args": attr.string_list(default = []),
     },
     toolchains = [_PY_TOOLCHAIN],
     implementation = _venv_impl,
     executable = True,
 )
 
-def create_venv(name, requirements_txt = None, target_compatible_with = None, destination_folder = None, site_packages_extra_files = []):
+def create_venv(name, requirements_txt = None, target_compatible_with = None, destination_folder = None, site_packages_extra_files = [], uv_args = []):
     _venv(
         name = name,
         destination_folder = destination_folder,
         site_packages_extra_files = site_packages_extra_files,
         requirements_txt = requirements_txt or "//:requirements.txt",
         target_compatible_with = target_compatible_with,
+        uv_args = uv_args,
     )
