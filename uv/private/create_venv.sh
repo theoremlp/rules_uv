@@ -26,9 +26,9 @@ then
   exit -1
 fi
 
-"$UV" venv "$BUILD_WORKSPACE_DIRECTORY/$target" --python "$PYTHON"
+"$UV" venv "$BUILD_WORKSPACE_DIRECTORY/$target" --python "$PYTHON"  --allow-existing
 source "$BUILD_WORKSPACE_DIRECTORY/$target/bin/activate"
-"$UV" pip install -r "$REQUIREMENTS_TXT" {{args}}
+"$UV" pip sync "$REQUIREMENTS_TXT" {{args}}
 
 site_packages_extra_files=({{site_packages_extra_files}})
 if [ ! -z ${site_packages_extra_files+x} ]; then
