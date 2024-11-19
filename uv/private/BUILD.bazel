@@ -4,6 +4,7 @@ exports_files([
     "create_venv.sh",
     "pip_compile_test.sh",
     "pip_compile.sh",
+    "sync_venv.sh",
 ])
 
 bzl_library(
