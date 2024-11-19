@@ -31,7 +31,7 @@ def _runfiles(ctx):
 
 def _venv_impl(ctx):
     executable = ctx.actions.declare_file(ctx.attr.name)
-    _uv_template(ctx, ctx.file._template, executable)
+    _uv_template(ctx, ctx.file.template, executable)
     return DefaultInfo(
         executable = executable,
         runfiles = _runfiles(ctx),
@@ -43,7 +43,7 @@ _venv = rule(
         "site_packages_extra_files": attr.label_list(default = [], doc = "Files to add to the site-packages folder inside the virtual environment. Useful for adding `sitecustomize.py` or `.pth` files", allow_files = True),
         "requirements_txt": attr.label(mandatory = True, allow_single_file = True),
         "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = transition_to_target),
-        "_template": attr.label(default = "//uv/private:create_venv.sh", allow_single_file = True),
+        "template": attr.label(allow_single_file = True),
         "uv_args": attr.string_list(default = []),
     },
     toolchains = [_PY_TOOLCHAIN],
@@ -59,4 +59,16 @@ def create_venv(name, requirements_txt = None, target_compatible_with = None, de
         requirements_txt = requirements_txt or "//:requirements.txt",
         target_compatible_with = target_compatible_with,
         uv_args = uv_args,
+        template = "@rules_uv//uv/private:create_venv.sh",
+    )
+
+def sync_venv(name, requirements_txt = None, target_compatible_with = None, destination_folder = None, site_packages_extra_files = [], uv_args = []):
+    _venv(
+        name = name,
+        destination_folder = destination_folder,
+        site_packages_extra_files = site_packages_extra_files,
+        requirements_txt = requirements_txt or "//:requirements.txt",
+        target_compatible_with = target_compatible_with,
+        uv_args = uv_args,
+        template = "@rules_uv//uv/private:sync_venv.sh",
     )

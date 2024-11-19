@@ -1,5 +1,5 @@
 load("@rules_uv//uv:pip.bzl", "pip_compile")
-load("@rules_uv//uv:venv.bzl", "create_venv")
+load("@rules_uv//uv:venv.bzl", "create_venv", "sync_venv")
 
 pip_compile(name = "generate_requirements_txt")
 
@@ -24,4 +24,9 @@ create_venv(
     site_packages_extra_files = [
         "site_packages_extra/sitecustomize.py",
     ],
+)
+
+sync_venv(
+    name = "sync-venv",
+    destination_folder = ".sync-venv",
 )
