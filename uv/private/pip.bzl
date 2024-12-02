@@ -15,6 +15,7 @@ _COMMON_ATTRS = {
     "requirements_in": attr.label(mandatory = True, allow_single_file = True),
     "requirements_txt": attr.label(mandatory = True, allow_single_file = True),
     "python_platform": attr.string(),
+    "universal": attr.bool(),
     "py3_runtime": attr.label(),
     "data": attr.label_list(allow_files = True),
     "uv_args": attr.string_list(default = _DEFAULT_ARGS),
@@ -52,6 +53,8 @@ def _uv_pip_compile(
     args.append("--python-version={version}".format(version = _python_version(py3_runtime)))
     if ctx.attr.python_platform:
         args.append("--python-platform={platform}".format(platform = ctx.attr.python_platform))
+    elif ctx.attr.universal:
+        args.append("--universal")
 
     ctx.actions.expand_template(
         template = template,
