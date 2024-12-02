@@ -10,6 +10,7 @@ def pip_compile(
         requirements_txt = None,
         target_compatible_with = None,
         python_platform = None,
+        universal = False,
         args = None,
         data = None,
         tags = None,
@@ -23,6 +24,7 @@ def pip_compile(
             May also be provided as a list of strings which represent the requirements file lines.
         requirements_txt: (optional, default "//:requirements.txt") a label for the requirements.txt file.
         python_platform: (optional) a uv pip compile compatible value for --python-platform.
+        universal: (optional, default False) use UV's `--universal` option
         target_compatible_with: (optional) specify that a particular target is compatible only with certain
           Bazel platforms.
         args: (optional) override the default arguments passed to uv pip compile, default arguments are:
@@ -55,6 +57,7 @@ def pip_compile(
         requirements_in = requirements_in,
         requirements_txt = requirements_txt,
         python_platform = python_platform,
+        universal = universal,
         target_compatible_with = target_compatible_with,
         data = data,
         uv_args = args,
@@ -74,6 +77,7 @@ def pip_compile(
         requirements_in = requirements_in,
         requirements_txt = requirements_txt,
         python_platform = python_platform or "",
+        universal = universal,
         target_compatible_with = target_compatible_with,
         data = data,
         uv_args = args,
