@@ -24,7 +24,7 @@ def pip_compile(
             May also be provided as a list of strings which represent the requirements file lines.
         requirements_txt: (optional, default "//:requirements.txt") a label for the requirements.txt file.
         python_platform: (optional) a uv pip compile compatible value for --python-platform.
-        universal: (optional, default False) use UV's `--universal` option
+        universal: (optional, default False) use uv's `--universal` option
         target_compatible_with: (optional) specify that a particular target is compatible only with certain
           Bazel platforms.
         args: (optional) override the default arguments passed to uv pip compile, default arguments are:
