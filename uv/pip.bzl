@@ -34,6 +34,7 @@ def pip_compile(
            --no-strip-extras  (Include extras in the output file)
         data: (optional) a list of labels of additional files to include
         tags: (optional) tags to apply to the generated test target
+        size: (optional) size of the test target, see https://bazel.build/reference/test-encyclopedia#role-test-runner
         **kwargs: (optional) other fields passed through to all underlying rules
 
     Targets produced by this macro are:
