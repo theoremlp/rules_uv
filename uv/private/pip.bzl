@@ -13,6 +13,7 @@ _DEFAULT_ARGS = [
 
 _COMMON_ATTRS = {
     "requirements_in": attr.label(mandatory = True, allow_single_file = True),
+    "requirements_overrides": attr.label(mandatory = False, allow_single_file = True),
     "requirements_txt": attr.label(mandatory = True, allow_single_file = True),
     "python_platform": attr.string(),
     "universal": attr.bool(),
@@ -55,6 +56,8 @@ def _uv_pip_compile(
         args.append("--python-platform={platform}".format(platform = ctx.attr.python_platform))
     elif ctx.attr.universal:
         args.append("--universal")
+    if ctx.attr.requirements_overrides:
+        args.append("--overrides={overrides_file}".format(overrides_file = ctx.file.requirements_overrides.short_path))
 
     ctx.actions.expand_template(
         template = template,
@@ -70,8 +73,9 @@ def _uv_pip_compile(
 
 def _runfiles(ctx):
     py3_runtime = _python_runtime(ctx)
+    overrides_file = [ctx.file.requirements_overrides] if ctx.attr.requirements_overrides else []
     runfiles = ctx.runfiles(
-        files = [ctx.file.requirements_in, ctx.file.requirements_txt] + ctx.files.data,
+        files = [ctx.file.requirements_in, ctx.file.requirements_txt] + overrides_file + ctx.files.data,
         transitive_files = py3_runtime.files,
     )
     runfiles = runfiles.merge(ctx.attr._uv[0].default_runfiles)
