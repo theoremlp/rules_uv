@@ -30,13 +30,17 @@ then
   exit -1
 fi
 
-"$UV" venv "$BUILD_WORKSPACE_DIRECTORY/$target" --python "$PYTHON"
-source "$BUILD_WORKSPACE_DIRECTORY/$target/bin/activate"
+if [[ "$target" != /* ]]; then
+  target="$BUILD_WORKSPACE_DIRECTORY/$target"
+fi
+
+"$UV" venv "$target" --python "$PYTHON"
+source "$target/bin/activate"
 "$UV" pip install -r "$REQUIREMENTS_TXT" {{args}}
 
 site_packages_extra_files=({{site_packages_extra_files}})
 if [ ! -z ${site_packages_extra_files+x} ]; then
-  site_packages_dir=$(find "$BUILD_WORKSPACE_DIRECTORY/$target/lib" -type d -name 'site-packages')
+  site_packages_dir=$(find "$target/lib" -type d -name 'site-packages')
   for file in "${site_packages_extra_files[@]}"; do
     cp "$file" "$site_packages_dir"/
   done
