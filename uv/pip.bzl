@@ -12,6 +12,7 @@ def pip_compile(
         python_platform = None,
         universal = False,
         args = None,
+        extra_args = None,
         data = None,
         tags = None,
         size = None,
@@ -32,6 +33,8 @@ def pip_compile(
            --generate-hashes  (Include distribution hashes in the output file)
            --emit-index-url   (Include `--index-url` and `--extra-index-url` entries in the generated output file)
            --no-strip-extras  (Include extras in the output file)
+        extra_args: (optional) appends to the default arguments passed to uv pip compile. If both args and
+            extra_args are provided, extra_args will be appended to args.
         data: (optional) a list of labels of additional files to include
         tags: (optional) tags to apply to the generated test target
         size: (optional) size of the test target, see https://bazel.build/reference/test-encyclopedia#role-test-runner
@@ -64,6 +67,7 @@ def pip_compile(
         target_compatible_with = target_compatible_with,
         data = data,
         uv_args = args,
+        extra_args = extra_args,
         **kwargs
     )
 
@@ -84,6 +88,7 @@ def pip_compile(
         target_compatible_with = target_compatible_with,
         data = data,
         uv_args = args,
+        extra_args = extra_args,
         tags = ["requires-network"] + tags,
         size = size,
         **kwargs
