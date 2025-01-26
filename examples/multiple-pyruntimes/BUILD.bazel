@@ -1,0 +1,17 @@
+load("@rules_uv//uv:pip.bzl", "pip_compile")
+
+pip_compile(
+    name = "generate_requirements_txt",
+)
+
+pip_compile(
+    name = "generate_requirements_txt_3_10",
+    py3_runtime = "@python_3_10//:py3_runtime",
+    requirements_txt = "requirements_3_10.txt",
+)
+
+pip_compile(
+    name = "generate_requirements_txt_3_11",
+    py3_runtime = "@python_3_11//:py3_runtime",
+    requirements_txt = "requirements_3_11.txt",
+)
