@@ -18,7 +18,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - uses: bazel-contrib/setup-bazel@0.12.1
+      - uses: bazel-contrib/setup-bazel@0.13.0
         with:
           repository-cache: true
           bazelrc: common --announce_rc --color=yes --enable_workspace=false
