@@ -43,6 +43,7 @@ Additionally, you can specify the following optional args:
 - `data`: pass additional files to be present when generating and testing requirements txt files (see also [examples/multiple-inputs](examples/multiple-inputs/))
 - `tags`: tags to apply to the test target
 - `target_compatible_with`: restrict targets to running on the specified Bazel platform
+- `requirements_overrides`: a label for the file that is used to override dependencies (passed to uv via `--overrides`)
 
 ### create_venv
 

@@ -7,6 +7,7 @@ load("//uv/private:pip.bzl", "pip_compile_test", _pip_compile = "pip_compile")
 def pip_compile(
         name,
         requirements_in = None,
+        requirements_overrides = None,
         requirements_txt = None,
         target_compatible_with = None,
         python_platform = None,
@@ -23,6 +24,7 @@ def pip_compile(
         name: name of the primary compilation target.
         requirements_in: (optional, default "//:requirements.in") a label for the requirements.in file.
             May also be provided as a list of strings which represent the requirements file lines.
+        requirements_overrides: (optional, default None) a label for the file that is used to override dependencies.
         requirements_txt: (optional, default "//:requirements.txt") a label for the requirements.txt file.
         python_platform: (optional) a uv pip compile compatible value for --python-platform.
         universal: (optional, default False) use uv's `--universal` option
@@ -58,6 +60,7 @@ def pip_compile(
     _pip_compile(
         name = name,
         requirements_in = requirements_in,
+        requirements_overrides = requirements_overrides,
         requirements_txt = requirements_txt,
         python_platform = python_platform,
         universal = universal,
@@ -78,6 +81,7 @@ def pip_compile(
         name = name + "_test",
         generator_label = name,
         requirements_in = requirements_in,
+        requirements_overrides = requirements_overrides,
         requirements_txt = requirements_txt,
         python_platform = python_platform or "",
         universal = universal,
