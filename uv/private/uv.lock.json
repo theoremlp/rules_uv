@@ -4,6 +4,22 @@
     "binaries": [
       {
         "kind": "archive",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.5.26/uv-aarch64-pc-windows-msvc.zip",
+        "file": "uv.exe",
+        "sha256": "3319e6f4506fdb2e3d8791bae05995f0aeda947ee87e373c17a699fb39165e3d",
+        "os": "windows",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.5.26/uv-x86_64-pc-windows-msvc.zip",
+        "file": "uv.exe",
+        "sha256": "a938eebb7433eb7097ae1cf3d53f9bb083edd4c746045f284a1c8904af1a1a11",
+        "os": "windows",
+        "cpu": "x86_64"
+      },
+      {
+        "kind": "archive",
         "url": "https://github.com/astral-sh/uv/releases/download/0.5.26/uv-aarch64-unknown-linux-musl.tar.gz",
         "file": "uv-aarch64-unknown-linux-musl/uv",
         "sha256": "42ce9a728ecd054268ba5a621002385e79ea10ba4546a8a6a695f430902029f5",
