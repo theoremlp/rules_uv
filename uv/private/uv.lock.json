@@ -20,33 +20,33 @@
       },
       {
         "kind": "archive",
-        "url": "https://github.com/astral-sh/uv/releases/download/0.5.26/uv-aarch64-unknown-linux-musl.tar.gz",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.5.29/uv-aarch64-unknown-linux-musl.tar.gz",
         "file": "uv-aarch64-unknown-linux-musl/uv",
-        "sha256": "42ce9a728ecd054268ba5a621002385e79ea10ba4546a8a6a695f430902029f5",
+        "sha256": "3f2d03e62b951a3e46e9c1cfae3091235c05ff274c7163162b8726fb56133219",
         "os": "linux",
         "cpu": "arm64"
       },
       {
         "kind": "archive",
-        "url": "https://github.com/astral-sh/uv/releases/download/0.5.26/uv-x86_64-unknown-linux-gnu.tar.gz",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.5.29/uv-x86_64-unknown-linux-gnu.tar.gz",
         "file": "uv-x86_64-unknown-linux-gnu/uv",
-        "sha256": "555f17717e7663109104b62976e9da6cfda1ad84213407b437fd9c8f573cc0ef",
+        "sha256": "46d3fcf04d64be42bded914d648657cd62d968172604e3aaf8386142c09d2317",
         "os": "linux",
         "cpu": "x86_64"
       },
       {
         "kind": "archive",
-        "url": "https://github.com/astral-sh/uv/releases/download/0.5.26/uv-aarch64-apple-darwin.tar.gz",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.5.29/uv-aarch64-apple-darwin.tar.gz",
         "file": "uv-aarch64-apple-darwin/uv",
-        "sha256": "3b503c630dc65b991502e1d9fe0ffc410ae50c503e8df6d4900f23b9ad436366",
+        "sha256": "c89e96bde40402cc4db2f59bcb886882ab69e557235279283a2db9dea61135c3",
         "os": "macos",
         "cpu": "arm64"
       },
       {
         "kind": "archive",
-        "url": "https://github.com/astral-sh/uv/releases/download/0.5.26/uv-x86_64-apple-darwin.tar.gz",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.5.29/uv-x86_64-apple-darwin.tar.gz",
         "file": "uv-x86_64-apple-darwin/uv",
-        "sha256": "7cf20dd534545a74290a244d3e8244d1010ba38d2d5950f504b6c93fab169f57",
+        "sha256": "2f13ef5a82b91ba137fd6441f478c406a0a8b0df41e9573d1e61551a1de5a3a2",
         "os": "macos",
         "cpu": "x86_64"
       }
