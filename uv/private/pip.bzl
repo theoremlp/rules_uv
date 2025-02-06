@@ -20,6 +20,7 @@ _COMMON_ATTRS = {
     "py3_runtime": attr.label(),
     "data": attr.label_list(allow_files = True),
     "uv_args": attr.string_list(default = _DEFAULT_ARGS),
+    "extra_args": attr.string_list(),
     "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = transition_to_target),
 }
 
@@ -43,12 +44,14 @@ def _uv_pip_compile(
         template,
         executable,
         generator_label,
-        uv_args):
+        uv_args,
+        extra_args):
     py3_runtime = _python_runtime(ctx)
     compile_command = "bazel run {label}".format(label = str(generator_label))
 
     args = []
     args += uv_args
+    args += extra_args
     args.append("--custom-compile-command='{compile_command}'".format(compile_command = compile_command))
     args.append("--python={python}".format(python = py3_runtime.interpreter.short_path))
     args.append("--python-version={version}".format(version = _python_version(py3_runtime)))
@@ -89,6 +92,7 @@ def _pip_compile_impl(ctx):
         executable = executable,
         generator_label = ctx.label,
         uv_args = ctx.attr.uv_args,
+        extra_args = ctx.attr.extra_args,
     )
     return DefaultInfo(
         executable = executable,
@@ -112,6 +116,7 @@ def _pip_compile_test_impl(ctx):
         executable = executable,
         generator_label = ctx.attr.generator_label.label,
         uv_args = ctx.attr.uv_args,
+        extra_args = ctx.attr.extra_args,
     )
     return [
         DefaultInfo(
