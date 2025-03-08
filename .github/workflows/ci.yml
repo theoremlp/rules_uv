@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         folder: [".", "examples/multiple-inputs", "examples/typical"]
-        version: ["7.1.0", "8.0.0"]
+        version: ["7.1.0", "8.0.1"]
         os: ["ubuntu-latest"]
     runs-on: ${{ matrix.os }}
     steps:
