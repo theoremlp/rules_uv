@@ -35,6 +35,7 @@ if [ ! -z ${site_packages_extra_files+x} ]; then
   site_packages_dir=$(find "$BUILD_WORKSPACE_DIRECTORY/$target/lib" -type d -name 'site-packages')
   for file in "${site_packages_extra_files[@]}"; do
     cp "$file" "$site_packages_dir"/
+    chmod +w "$site_packages_dir"/"$file"
   done
 fi
 
