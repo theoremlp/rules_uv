@@ -8,6 +8,10 @@ REQUIREMENTS_TXT="{{requirements_txt}}"
 
 PYTHON="$(realpath "$RESOLVED_PYTHON")"
 
+if [ -z ${TERM} ] || [ ${TERM} == "dumb" ]; then
+   export TERM=xterm
+fi
+
 bold="$(tput bold)"
 normal="$(tput sgr0)"
 
