@@ -1,3 +1,4 @@
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
 load("@rules_uv//uv:pip.bzl", "pip_compile")
 load("@rules_uv//uv:venv.bzl", "create_venv", "sync_venv")
 
@@ -18,10 +19,29 @@ pip_compile(
 
 create_venv(name = "create-venv")
 
+# write_file will generate files write-protected.
+# the generated .venv will then need a rm -rf in case it should be removed.
+# {create,sync}_venv.sh will take care that file in there are write-able.
+write_file(
+    name = "foo",
+    out = "foo.py",
+    content = ["print('bar')"],
+)
+
 create_venv(
     name = "create-venv-custom-destination",
     destination_folder = ".venv",
     site_packages_extra_files = [
+        "foo.py",
+        "site_packages_extra/sitecustomize.py",
+    ],
+)
+
+sync_venv(
+    name = "sync-venv-custom-destination",
+    destination_folder = ".venv",
+    site_packages_extra_files = [
+        "foo.py",
         "site_packages_extra/sitecustomize.py",
     ],
 )

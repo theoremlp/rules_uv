@@ -8,6 +8,8 @@ module(
 bazel_dep(name = "platforms", version = "0.0.8")
 bazel_dep(name = "rules_python", version = "0.31.0")
 bazel_dep(name = "rules_uv", version = "0.0.0")
+bazel_dep(name = "bazel_skylib", version = "1.7.1")
+
 local_path_override(
     module_name = "rules_uv",
     path = "../..",
