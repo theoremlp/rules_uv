@@ -33,3 +33,15 @@ jobs:
       - name: Test
         working-directory: ${{ matrix.folder }}
         run: bazel test ...
+      - name: Run examples/typical
+        working-directory: "examples/typical"
+        run: |
+          set -e
+          bazel run //:create-venv
+          bazel run //:create-venv-custom-destination
+          bazel run //:sync-venv-custom-destination
+      - name: Run examples/multiple-inputs
+        working-directory: "examples/multiple-inputs"
+        run: |
+          set -e
+          bazel run //:create-venv
