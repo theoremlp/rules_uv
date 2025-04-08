@@ -8,6 +8,10 @@ REQUIREMENTS_TXT="{{requirements_txt}}"
 
 PYTHON="$(realpath "$RESOLVED_PYTHON")"
 
+if [ -z ${TERM} ] || [ ${TERM} == "dumb" ]; then
+   export TERM=xterm
+fi
+
 bold="$(tput bold)"
 normal="$(tput sgr0)"
 
@@ -35,7 +39,7 @@ if [ ! -z ${site_packages_extra_files+x} ]; then
   site_packages_dir=$(find "$BUILD_WORKSPACE_DIRECTORY/$target/lib" -type d -name 'site-packages')
   for file in "${site_packages_extra_files[@]}"; do
     cp "$file" "$site_packages_dir"/
-    chmod +w "$site_packages_dir"/"$file"
+    chmod +w "${site_packages_dir}/$(basename ${file})"
   done
 fi
 
