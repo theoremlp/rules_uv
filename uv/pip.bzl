@@ -17,6 +17,7 @@ def pip_compile(
         data = None,
         tags = None,
         size = None,
+        env = None,
         **kwargs):
     """
     Produce targets to compile a requirements.in or pyproject.toml file into a requirements.txt file.
@@ -40,6 +41,7 @@ def pip_compile(
         data: (optional) a list of labels of additional files to include
         tags: (optional) tags to apply to the generated test target
         size: (optional) size of the test target, see https://bazel.build/reference/test-encyclopedia#role-test-runner
+        env: (optional) a dictionary of environment variables to set for uv pip compile and the test target
         **kwargs: (optional) other fields passed through to all underlying rules
 
     Targets produced by this macro are:
@@ -71,6 +73,7 @@ def pip_compile(
         data = data,
         uv_args = args,
         extra_args = extra_args,
+        env = env,
         **kwargs
     )
 
@@ -95,5 +98,6 @@ def pip_compile(
         extra_args = extra_args,
         tags = ["requires-network"] + tags,
         size = size,
+        env = env,
         **kwargs
     )

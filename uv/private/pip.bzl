@@ -21,6 +21,7 @@ _COMMON_ATTRS = {
     "data": attr.label_list(allow_files = True),
     "uv_args": attr.string_list(default = _DEFAULT_ARGS),
     "extra_args": attr.string_list(),
+    "env": attr.string_dict(),
     "_uv": attr.label(default = "@multitool//tools/uv", executable = True, cfg = transition_to_target),
 }
 
@@ -94,10 +95,15 @@ def _pip_compile_impl(ctx):
         uv_args = ctx.attr.uv_args,
         extra_args = ctx.attr.extra_args,
     )
-    return DefaultInfo(
-        executable = executable,
-        runfiles = _runfiles(ctx),
-    )
+    return [
+        DefaultInfo(
+            executable = executable,
+            runfiles = _runfiles(ctx),
+        ),
+        RunEnvironmentInfo(
+            environment = ctx.attr.env,
+        ),
+    ]
 
 pip_compile = rule(
     attrs = _COMMON_ATTRS | {
@@ -124,6 +130,7 @@ def _pip_compile_test_impl(ctx):
             runfiles = _runfiles(ctx),
         ),
         RunEnvironmentInfo(
+            environment = ctx.attr.env,
             # Ensures that .netrc can be detected by uv
             # See https://github.com/theoremlp/rules_uv/issues/103
             inherited_environment = ["HOME"],
