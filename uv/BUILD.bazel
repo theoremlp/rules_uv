@@ -7,6 +7,12 @@ bzl_library(
 )
 
 bzl_library(
+    name = "uv_export",
+    srcs = ["uv_export.bzl"],
+    visibility = ["//visibility:public"],
+)
+
+bzl_library(
     name = "venv",
     srcs = ["venv.bzl"],
     visibility = ["//visibility:public"],
