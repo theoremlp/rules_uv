@@ -1,5 +1,6 @@
 "uv based venv generation"
 
+load(":interpreter_path.bzl", "python_interpreter_path")
 load(":transition_to_target.bzl", "transition_to_target")
 
 _PY_TOOLCHAIN = "@bazel_tools//tools/python:toolchain_type"
@@ -13,7 +14,7 @@ def _uv_template(ctx, template, executable):
         substitutions = {
             "{{uv}}": ctx.executable._uv.short_path,
             "{{requirements_txt}}": ctx.file.requirements_txt.short_path,
-            "{{resolved_python}}": py_toolchain.py3_runtime.interpreter.short_path,
+            "{{resolved_python}}": python_interpreter_path(py_toolchain.py3_runtime),
             "{{destination_folder}}": ctx.attr.destination_folder,
             "{{site_packages_extra_files}}": " ".join(["'" + file.short_path + "'" for file in ctx.files.site_packages_extra_files]),
             "{{args}}": " \\\n    ".join(ctx.attr.uv_args),
