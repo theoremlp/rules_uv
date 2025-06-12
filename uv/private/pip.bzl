@@ -1,6 +1,7 @@
 "uv based pip compile rules"
 
 load("@rules_python//python:defs.bzl", "PyRuntimeInfo")
+load(":interpreter_path.bzl", "python_interpreter_path")
 load(":transition_to_target.bzl", "transition_to_target")
 
 _PY_TOOLCHAIN = "@bazel_tools//tools/python:toolchain_type"
@@ -54,7 +55,7 @@ def _uv_pip_compile(
     args += uv_args
     args += extra_args
     args.append("--custom-compile-command='{compile_command}'".format(compile_command = compile_command))
-    args.append("--python={python}".format(python = py3_runtime.interpreter.short_path))
+    args.append("--python={python}".format(python = python_interpreter_path(py3_runtime)))
     args.append("--python-version={version}".format(version = _python_version(py3_runtime)))
     if ctx.attr.python_platform:
         args.append("--python-platform={platform}".format(platform = ctx.attr.python_platform))
