@@ -4,49 +4,49 @@
     "binaries": [
       {
         "kind": "archive",
-        "url": "https://github.com/astral-sh/uv/releases/download/0.8.4/uv-aarch64-unknown-linux-musl.tar.gz",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.8.5/uv-aarch64-unknown-linux-musl.tar.gz",
         "file": "uv-aarch64-unknown-linux-musl/uv",
-        "sha256": "d194e457ba2c9f4e737ee9919c66465e0297d956b6c7121b61d37b98e15a694c",
+        "sha256": "400771c1136c9d5cf624bb1695b08d46a4e4e0fc2c9b8897e7be950ac5e00ae0",
         "os": "linux",
         "cpu": "arm64"
       },
       {
         "kind": "archive",
-        "url": "https://github.com/astral-sh/uv/releases/download/0.8.4/uv-x86_64-unknown-linux-gnu.tar.gz",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.8.5/uv-x86_64-unknown-linux-gnu.tar.gz",
         "file": "uv-x86_64-unknown-linux-gnu/uv",
-        "sha256": "eb61d39fdc6ea21a6d00a24b50376102168240849c5022d3eba331f972ba3934",
+        "sha256": "9db7e7db3cf98ddb57954bfb72c9ba4b8a4514b910e666e3c57e8b4e83a0d630",
         "os": "linux",
         "cpu": "x86_64"
       },
       {
         "kind": "archive",
-        "url": "https://github.com/astral-sh/uv/releases/download/0.8.4/uv-aarch64-apple-darwin.tar.gz",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.8.5/uv-aarch64-apple-darwin.tar.gz",
         "file": "uv-aarch64-apple-darwin/uv",
-        "sha256": "ef6785df8c23232ce6209c04acefd0c0d2ffb3a3ba0eef16422bdfe99a059105",
+        "sha256": "467e875ac84ac2155f048b56e33741d7dee6f02369048d5b6c05b74b745411e2",
         "os": "macos",
         "cpu": "arm64"
       },
       {
         "kind": "archive",
-        "url": "https://github.com/astral-sh/uv/releases/download/0.8.4/uv-x86_64-apple-darwin.tar.gz",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.8.5/uv-x86_64-apple-darwin.tar.gz",
         "file": "uv-x86_64-apple-darwin/uv",
-        "sha256": "14e5309f182d1a92cf6c82f5891a0a0dc1cd5d46627171eaa1e84fa2b7e0afc3",
+        "sha256": "9ee5b34975ab4659345fc96cc08098d7ec871cdfa969a5774894bcaebdaf3b58",
         "os": "macos",
         "cpu": "x86_64"
       },
       {
         "kind": "archive",
-        "url": "https://github.com/astral-sh/uv/releases/download/0.8.4/uv-aarch64-pc-windows-msvc.zip",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.8.5/uv-aarch64-pc-windows-msvc.zip",
         "file": "uv.exe",
-        "sha256": "34cdff9ed7e1ffece93a895e65377a0ea4f186eb6785ead045280be59edabf19",
+        "sha256": "8d3dda6ff64065e65b49ecd42018a885c0f20e6967af950ef121f976d73e72db",
         "os": "windows",
         "cpu": "arm64"
       },
       {
         "kind": "archive",
-        "url": "https://github.com/astral-sh/uv/releases/download/0.8.4/uv-x86_64-pc-windows-msvc.zip",
+        "url": "https://github.com/astral-sh/uv/releases/download/0.8.5/uv-x86_64-pc-windows-msvc.zip",
         "file": "uv.exe",
-        "sha256": "817c50c80229f88de9699626ee3774c0cceed86099663e8fb00c5ffae7ea911c",
+        "sha256": "898049e2db4a92e59bf1da7e14cad9b5afadb7d0cf9dd55a5274825290f7ba6d",
         "os": "windows",
         "cpu": "x86_64"
       }
