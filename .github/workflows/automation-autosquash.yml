@@ -27,7 +27,7 @@ jobs:
           app-id: ${{ secrets.THM_AUTOMATION_APP_ID }}
           private-key: ${{ secrets.THM_AUTOMATION_PRIVATE_KEY }}
       - if: github.event.pull_request.head.repo.full_name == 'theoremlp/rules_uv'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - if: github.event.pull_request.head.repo.full_name == 'theoremlp/rules_uv'
         uses: theoremlp/autosquash@v1
         with:
