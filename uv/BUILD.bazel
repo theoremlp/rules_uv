@@ -4,10 +4,16 @@ bzl_library(
     name = "pip",
     srcs = ["pip.bzl"],
     visibility = ["//visibility:public"],
+    deps = [
+        "//uv/private:pip",
+        "@bazel_skylib//lib:types",
+        "@bazel_skylib//rules:write_file",
+    ],
 )
 
 bzl_library(
     name = "venv",
     srcs = ["venv.bzl"],
     visibility = ["//visibility:public"],
+    deps = ["//uv/private:venv"],
 )
