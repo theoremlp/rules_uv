@@ -10,11 +10,36 @@ exports_files([
 bzl_library(
     name = "pip",
     srcs = ["pip.bzl"],
-    visibility = ["//multitool:__subpackages__"],
+    visibility = [
+        "//multitool:__subpackages__",
+        "//uv:__pkg__",
+    ],
+    deps = [
+        ":interpreter_path",
+        ":transition_to_target",
+        "@rules_python//python:defs_bzl",
+    ],
 )
 
 bzl_library(
     name = "venv",
     srcs = ["venv.bzl"],
-    visibility = ["//multitool:__subpackages__"],
+    visibility = [
+        "//multitool:__subpackages__",
+        "//uv:__pkg__",
+    ],
+    deps = [
+        ":interpreter_path",
+        ":transition_to_target",
+    ],
+)
+
+bzl_library(
+    name = "interpreter_path",
+    srcs = ["interpreter_path.bzl"],
+)
+
+bzl_library(
+    name = "transition_to_target",
+    srcs = ["transition_to_target.bzl"],
 )
